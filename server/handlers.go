@@ -99,7 +99,17 @@ func HandlePost() echo.HandlerFunc {
 		if err := c.Bind(newTest); err != nil {
 			return err
 		}
+
+		resp, err := http.Post("https://httpbin.org/post", "application/json", nil)
+		if err != nil {
+			return err
+		}
+		if resp.StatusCode != http.StatusOK {
+			return echo.NewHTTPError(resp.StatusCode)
+		}
+
 		newTest.Status = "Success"
+
 		return c.JSON(http.StatusOK, newTest)
 	}
 }
