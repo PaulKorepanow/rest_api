@@ -104,9 +104,7 @@ func HandlePost() echo.HandlerFunc {
 		if err != nil {
 			return err
 		}
-		if resp.StatusCode != http.StatusOK {
-			return echo.NewHTTPError(resp.StatusCode)
-		}
+		defer resp.Body.Close()
 
 		newTest.Status = "Success"
 
