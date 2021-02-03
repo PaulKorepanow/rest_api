@@ -6,7 +6,6 @@ import (
 )
 
 func main() {
-	//fmt.Println("hallo world!")
 	e := echo.New()
 
 	e.GET("/data", server.HandleUsers())

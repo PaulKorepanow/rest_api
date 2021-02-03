@@ -4,7 +4,11 @@ import (
 	"fmt"
 )
 
-type UserLocal struct {
+type Users struct {
+	Users []User `json:"data"`
+}
+
+type User struct {
 	Gender    string `json:"gender"`
 	FirstName string `json:"first_name"`
 	LastName  string `json:"last_name"`
@@ -12,11 +16,11 @@ type UserLocal struct {
 	CreatedAt string `json:"created_at"`
 }
 
-type Users struct {
-	Users []User `json:"results"`
+type RandomUsers struct {
+	RandomUsers []RandomUser `json:"results"`
 }
 
-type User struct {
+type RandomUser struct {
 	Gender string `json:"gender"`
 	Name   struct {
 		First string `json:"first"`

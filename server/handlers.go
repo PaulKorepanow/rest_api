@@ -10,8 +10,8 @@ import (
 
 const (
 	amountOfUser = 20
-	defaultTo    = "4000-01-01T12:37:18.485Z"
-	defaultFrom  = "0001-01-01T12:37:18.485Z"
+	defaultFrom  = "0001-01-01T12:00:00Z"
+	defaultTo    = "4000-01-01T12:00:00Z"
 )
 
 func HandleUsers() echo.HandlerFunc {
@@ -57,13 +57,13 @@ func HandleUsers() echo.HandlerFunc {
 
 		defer resp.Body.Close()
 
-		res := Users{}
+		res := RandomUsers{}
 		if err = json.NewDecoder(resp.Body).Decode(&res); err != nil {
 			return err
 		}
 
-		var users []UserLocal
-		for _, u := range res.Users {
+		var users Users
+		for _, u := range res.RandomUsers {
 			date, err := time.Parse(time.RFC3339, u.Registration.Date)
 			if err != nil {
 				return err
@@ -73,7 +73,7 @@ func HandleUsers() echo.HandlerFunc {
 				if err != nil {
 					return err
 				}
-				users = append(users, UserLocal{
+				users.Users = append(users.Users, User{
 					Gender:    u.Gender,
 					FirstName: u.Name.First,
 					LastName:  u.Name.Last,
@@ -84,7 +84,7 @@ func HandleUsers() echo.HandlerFunc {
 
 		}
 
-		return c.JSON(http.StatusOK, &users)
+		return c.JSON(http.StatusOK, users)
 	}
 }
 
